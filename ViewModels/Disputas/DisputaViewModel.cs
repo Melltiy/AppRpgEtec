@@ -87,6 +87,7 @@ namespace AppRpgEtec.ViewModels.Disputas
 
         public Personagem PersonagemSelecionado
         {
+            get { return personagemSelecionado; }
             set
             {
                 if (value == null)
