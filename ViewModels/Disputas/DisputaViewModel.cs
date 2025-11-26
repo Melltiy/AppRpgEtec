@@ -82,6 +82,44 @@ namespace AppRpgEtec.ViewModels.Disputas
                     .DisplayAlert("Ops", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
             }
         }
+
+        private Personagem personagemSelecionado;
+
+        public Personagem PersonagemSelecionado
+        {
+            set
+            {
+                if (value == null)
+                {
+                    personagemSelecionado = value;
+                    SelecionarPersonagem(personagemSelecionado);
+                    OnPropertyChanged();
+                    PersonagensEncontrados.Clear();
+                }
+            }
+        }
+
+        private string textoBuscaDigitado = string.Empty;
+
+        public string TextoBuscaDigitado
+        {
+            get { return textoBuscaDigitado; }
+            set
+            {
+
+                //Verifica se não é nulo, se não é vazio e se o tamanho do texto é maior que zero.
+                if ((value != null && !string.IsNullOrEmpty(value) && value.Length > 0))
+                {
+                    textoBuscaDigitado = value;
+                    _ = PesquisarPersonagens(textoBuscaDigitado);
+                }
+                else
+                {
+                    //Limpa o list view que exibe o resultado da pesquisa
+                    PersonagensEncontrados.Clear();
+                }
+            }
+        }
     }
 }
 
