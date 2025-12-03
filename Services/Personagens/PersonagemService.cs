@@ -76,7 +76,7 @@ namespace AppRpgEtec.Services.Personagens
             return result;
         }
 
-        public async Task<int> PutZerarRankingRestaurarVidasGeralAsync(Personagem p)
+        public async Task<int> PutZerarRankingRestaurarVidasGeralAsync()
         {
             string urlComplementar = "/ZerarRankingRestaurarVidas";
             var result = await _request.PutAsync(apiUrlBase + urlComplementar, new Personagem(), _token);

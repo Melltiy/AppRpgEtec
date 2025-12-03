@@ -102,7 +102,7 @@ namespace AppRpgEtec.ViewModels.Personagens
 
         public async Task ExecutarZerarRankingRestaurarVidasGeral()
         {
-            await pService.PutZerarRankingRestaurarVidasGeralAsync(p);
+            await pService.PutZerarRankingRestaurarVidasGeralAsync(); 
         }
 
         public async void ProcessarOpcaoRespondidaAsync(Personagem personagem, string result)
@@ -138,11 +138,47 @@ namespace AppRpgEtec.ViewModels.Personagens
             }
         }
 
+        public async Task ExibirOpcoesAsync(Personagem personagem)
+        {
+            try
+            {
+                personagemSelecionado = null;
+                string result = string.Empty;
+
+                if (personagem.PontosVida > 0)
+                {
+
+                    result = await Application.Current.MainPage
+                       .DisplayActionSheet("Opções para o personagem " + personagem.Nome,
+                       "Cancelar",
+                       "Editar Personagem",
+                       "Restaurar Pontos de Vida",
+                       "Zerar Ranking do Personagem",
+                       "Remover Personagem");
+                }
+                else
+                {
+                    result = await Application.Current.MainPage
+                       .DisplayActionSheet("Opções para o personagem " + personagem.Nome,
+                       "Cancelar",
+                       "Restaurar Pontos de Vida");
+                }
+
+                if (result != null)
+                    ProcessarOpcaoRespondidaAsync(personagem, result);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ops...", ex.Message, "Ok");
+            }
+        }
+
+
         private Personagem personagemSelecionado;
 
         public Personagem PersonagemSelecionado
         {
-            get { return PersonagemSelecionado}
+            get { return PersonagemSelecionado; }
             set
             {
                 if (value != null)
